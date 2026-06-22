@@ -1,0 +1,2321 @@
+{
+  "entityData": [
+    {
+      "_id": "QF6mbtYaESKC5Zn22",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "users",
+      "name": "users",
+      "position": {
+        "x": 3220,
+        "y": 1580
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "noGWJqbRFhQtG8du5",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "DkPeCZgMpCCTXQtuu",
+          "name": "username",
+          "pName": "username",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "DNfsg33oQSGQWuLLZ",
+          "name": "nickname",
+          "pName": "nickname",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "dwmSdjnBg3Pz7W5kc",
+          "name": "email",
+          "pName": "email",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "SduF9hx9YDzQBdBCM",
+          "name": "password",
+          "pName": "password",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "ydgYtwK4LoBSog9yb",
+          "name": "birth_date",
+          "pName": "birth_date",
+          "domain": "",
+          "type": "DATE",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "guFZ9rsMbtq8PjFhC",
+          "name": "financial_type",
+          "pName": "financial_type",
+          "domain": "",
+          "type": "VARCHAR(50)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "GPTHEgveunXwjy8Hq",
+          "name": "profile_image_url",
+          "pName": "profile_image_url",
+          "domain": "",
+          "type": "VARCHAR(500)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "wm6PT7rxkhqmgCdLL",
+          "name": "bio",
+          "pName": "bio",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "ZHnoHSaXy2bFMFFMZ",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "K6TXgQqZK46rkdtNt",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "BgxB4T2NqoLGZJNrG",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "financial_tests",
+      "name": "financial_tests",
+      "position": {
+        "x": 4530,
+        "y": 1630
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "HoMXkL6MFMLgu7od3",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "jDDeePkG2nc3jRhH8",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "wQzKSarENd9grJQoy",
+          "name": "result_type",
+          "pName": "result_type",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "hspesAHgmTrkZPACD",
+          "name": "score",
+          "pName": "score",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "tgjmqTnJtmxDycWML",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "h4fesBBx7znbWDSBG",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "financial_test_answers",
+      "name": "financial_test_answers",
+      "position": {
+        "x": 5070,
+        "y": 1650
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "FLT4YiXgjztRXxKeN",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "vGwD2tgfW4RrMhZhf",
+          "name": "test_id",
+          "pName": "test_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "BgxB4T2NqoLGZJNrG",
+          "relFieldId": "HoMXkL6MFMLgu7od3",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "MBM7vDsSL6jEpYMrC",
+          "name": "question_no",
+          "pName": "question_no",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "sxo6GWW7Zot3sMwhQ",
+          "name": "answer_value",
+          "pName": "answer_value",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "kGFDzbknsghG65zpz",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "financial_products",
+      "name": "financial_products",
+      "position": {
+        "x": 3240,
+        "y": 2500
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "AAS6QHcRZxoqycuaw",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "LHzi3ejfZcFdhx5Ee",
+          "name": "fin_prdt_cd",
+          "pName": "fin_prdt_cd",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "TpBGHiodZvK5DbPKz",
+          "name": "bank_code",
+          "pName": "bank_code",
+          "domain": "",
+          "type": "VARCHAR(50)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "RopjjJy2KGPo57xZg",
+          "name": "product_type",
+          "pName": "product_type",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "2G3bpAtBSmodRHrM9",
+          "name": "bank_name",
+          "pName": "bank_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "C2wmdP32yrevxFR3B",
+          "name": "product_name",
+          "pName": "product_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "jifLNzaRxAAEoi3ng",
+          "name": "join_way",
+          "pName": "join_way",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "p99M8MghY9Ycmxcqa",
+          "name": "target_user",
+          "pName": "target_user",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "EjwMh8n7HsPsQzMWA",
+          "name": "description",
+          "pName": "description",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "prYBT9CkJ7uz749sH",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "aTS5a8KCquiS2qLtL",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "yfbQnhNeS3EXZeFs6",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "financial_product_options",
+      "name": "financial_product_options",
+      "position": {
+        "x": 3250,
+        "y": 3070
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "D74HQY7LdZazTcSyL",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "XBTqSSYGcb9E5u9Sz",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "8GAgu2GiumixikLPo",
+          "name": "save_trm",
+          "pName": "save_trm",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "pvC2BwQAjcK3vktuz",
+          "name": "interest_rate",
+          "pName": "interest_rate",
+          "domain": "",
+          "type": "DECIMAL(5,2)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "Shh5eBzDi2cRSZfmb",
+          "name": "max_interest_rate",
+          "pName": "max_interest_rate",
+          "domain": "",
+          "type": "DECIMAL(5,2)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "KByXYduARx22hbA8z",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "favorite_products",
+      "name": "favorite_products",
+      "position": {
+        "x": 3240,
+        "y": 2030
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "t9DWDaee6QiNToKSZ",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "bnarafx4kwsF6GKbz",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "x78DMgN93qaiDoWFy",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "yvcrG4KKLwkb567BQ",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "f6qW2L23XA2uQ9As7",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "product_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "8eTSxvTPLd2NxTtTB",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "recent_products",
+      "name": "recent_products",
+      "position": {
+        "x": 2660,
+        "y": 2110
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "3kmkCBbgtMrFLDNsw",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "KdwytoWRudqx3zAon",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "XvHmKhhqDZF7DoxyQ",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "FQDpTQiXCYRAqcXmG",
+          "name": "viewed_at",
+          "pName": "viewed_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "HPy29w7bCmin4hiC6",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "subscribed_products",
+      "name": "subscribed_products",
+      "position": {
+        "x": 2230,
+        "y": 2110
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "i7mCMT99NkQXNfECF",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "ZJFTikhCfQc3zaAxs",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "6iRv7ATNCeNDyw3f9",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "Kn8ERoMBmpmWTi2ax",
+          "name": "subscribed_at",
+          "pName": "subscribed_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "QDbmi7KRdD5NEDm39",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "product_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "MaXoDdHLHAjoCguBS",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "product_reviews",
+      "name": "product_reviews",
+      "position": {
+        "x": 1800,
+        "y": 2110
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "FQtuCqitpJe5bYPJn",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "qvkLWjdvhRg9eLCkf",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "Nhx9WMZEpC95uvWgw",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "Ah2woT6xvwMMuKnEN",
+          "name": "rating",
+          "pName": "rating",
+          "domain": "",
+          "type": "TINYINT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "FdrXtKiKjQ533X4Cb",
+          "name": "content",
+          "pName": "content",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "Xptt2KdSWJpXX6qK2",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "8MXaGQebD9Wrbt6aY",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "JXyRrT8PiMX6i2ozW",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "product_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "wyyd9mRZEjDh2rYcE",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "ai_product_recommendations",
+      "name": "ai_product_recommendations",
+      "position": {
+        "x": 4490,
+        "y": 2470
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "9A7FWeb2C3LCSgH9z",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "wNQQthg32yXPCYmgj",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "2qBKsR6JYiGkXpocc",
+          "name": "test_id",
+          "pName": "test_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "BgxB4T2NqoLGZJNrG",
+          "relFieldId": "HoMXkL6MFMLgu7od3",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "gMgfMWMqtjCcuPi7f",
+          "name": "product_id",
+          "pName": "product_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "kGFDzbknsghG65zpz",
+          "relFieldId": "AAS6QHcRZxoqycuaw",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "6jy2BizMn5BCsQtDA",
+          "name": "score",
+          "pName": "score",
+          "domain": "",
+          "type": "DECIMAL(5,2)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "CGooNEtDtvpFja2QZ",
+          "name": "reason",
+          "pName": "reason",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "tKHDy7FqspARmcgkz",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "TGPyprzz8NYT8uxvS",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "test_id,",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "Ycc8Y3zbKj3Frqpiu",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "stocks",
+      "name": "stocks",
+      "position": {
+        "x": 3250,
+        "y": 330
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "tfeAhQjRngNMsybyo",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "kiQdTKwBD9gzYjqAw",
+          "name": "stock_code",
+          "pName": "stock_code",
+          "domain": "",
+          "type": "VARCHAR(50)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "iHWQ7tGPz67f8Jxsw",
+          "name": "stock_name",
+          "pName": "stock_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "2Rxke3D6bjDicKXZ9",
+          "name": "description",
+          "pName": "description",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "5PBxtZyQ7CAqMjTp8",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "CAGa8zyWkLL9spp6g",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "stock_prices",
+      "name": "stock_prices",
+      "position": {
+        "x": 3270,
+        "y": 70
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "sCa9BTrgpGPFgr8kP",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "3HooDiDJsn3icGWhK",
+          "name": "stock_id",
+          "pName": "stock_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "Ycc8Y3zbKj3Frqpiu",
+          "relFieldId": "tfeAhQjRngNMsybyo",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "qqwum23jKQzZuMwcA",
+          "name": "price",
+          "pName": "price",
+          "domain": "",
+          "type": "DECIMAL(12,2)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "z75Pf87Y56gzEbpsY",
+          "name": "change_rate",
+          "pName": "change_rate",
+          "domain": "",
+          "type": "DECIMAL(5,2)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "H6ujaudm96AhDCHLt",
+          "name": "volume",
+          "pName": "volume",
+          "domain": "",
+          "type": "BIGINT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "QwWuWBtt22iCxRaip",
+          "name": "recorded_at",
+          "pName": "recorded_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "9oYTC3phntbquBjm6",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "favorite_stocks",
+      "name": "favorite_stocks",
+      "position": {
+        "x": 1770,
+        "y": 340
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "CdcTsg7gwc6F9pEqX",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "9Bn5KHofPEJA66LJ9",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "FY8vMJdi2eN9Hyj4a",
+          "name": "stock_id",
+          "pName": "stock_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "Ycc8Y3zbKj3Frqpiu",
+          "relFieldId": "tfeAhQjRngNMsybyo",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "WGRzkPBHeSGfabcjW",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "yxz5r72wE7prcyRgr",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "stock_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "Zu9WJDRgE5rsMhsRY",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "ai_stock_recommendations",
+      "name": "ai_stock_recommendations",
+      "position": {
+        "x": 4620,
+        "y": 390
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "Atu68amAxDHNdXER7",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "h9JWbRNTpbiaffePE",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "mYw9ZcWYesx8pNxwZ",
+          "name": "test_id",
+          "pName": "test_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "BgxB4T2NqoLGZJNrG",
+          "relFieldId": "HoMXkL6MFMLgu7od3",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "Y4NBQ475ERdNfxvzR",
+          "name": "stock_id",
+          "pName": "stock_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "Ycc8Y3zbKj3Frqpiu",
+          "relFieldId": "tfeAhQjRngNMsybyo",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "AnMjspH2JBodHk8eM",
+          "name": "score",
+          "pName": "score",
+          "domain": "",
+          "type": "DECIMAL(5,2)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "u6YuPDHac62iMuzT3",
+          "name": "reason",
+          "pName": "reason",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "wwYDJjsjFai6Y85Bu",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "6wa5wS58sZkJTtwte",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "test_id,",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "S7vkh4e6vYshX7AZx",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "cards",
+      "name": "cards",
+      "position": {
+        "x": 1620,
+        "y": 960
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "QsCgBe6eR2rRQc6Sd",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "5rETZTWi3E5KYjBsR",
+          "name": "card_name",
+          "pName": "card_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "8P8QqMER4NYFSLBSA",
+          "name": "company",
+          "pName": "company",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "riHepkHc2isDNyZxu",
+          "name": "card_type",
+          "pName": "card_type",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "gB7ji5eZHAYmmHjKF",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "oH8Do2zKZpq3bjyJ6",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "card_benefits",
+      "name": "card_benefits",
+      "position": {
+        "x": 1550,
+        "y": 710
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "wpLT3a8R6dqPmTZhA",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "GzgF7qtKDLH7YRgA2",
+          "name": "card_id",
+          "pName": "card_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "S7vkh4e6vYshX7AZx",
+          "relFieldId": "QsCgBe6eR2rRQc6Sd",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "Se8uZDmpaeDA32WDo",
+          "name": "benefit_category",
+          "pName": "benefit_category",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "aAFc3nXNzCTN5psTR",
+          "name": "benefit_detail",
+          "pName": "benefit_detail",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "q7FGtraZAGuQfekR2",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "card_reviews",
+      "name": "card_reviews",
+      "position": {
+        "x": 1600,
+        "y": 1640
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "XgB4s24oXyPr54Hai",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "g3XXnc6Du7J8toBjx",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "EX8s6YaJ2TEPMEs9y",
+          "name": "card_id",
+          "pName": "card_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "S7vkh4e6vYshX7AZx",
+          "relFieldId": "QsCgBe6eR2rRQc6Sd",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "BEwkCam4gBbkWgxa8",
+          "name": "rating",
+          "pName": "rating",
+          "domain": "",
+          "type": "TINYINT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "8JMCh4WxADLgr9gXd",
+          "name": "content",
+          "pName": "content",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "2SQySQqK2mv5TMWnZ",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "WBJR5T4MNTkJbfLKH",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "gKLuucvKNyzY52rcJ",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "card_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "mCLM39zMWuWEfKQHS",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "community_posts",
+      "name": "community_posts",
+      "position": {
+        "x": 3250,
+        "y": 610
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "PrEnc9hPAncdWa6eC",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "ftQcSMjX2DkLqRwj8",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "5nBA6YxQxqSB9mDto",
+          "name": "stock_id",
+          "pName": "stock_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": "Ycc8Y3zbKj3Frqpiu",
+          "relFieldId": "tfeAhQjRngNMsybyo",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "YFhAzTHSkXeezKDqj",
+          "name": "category",
+          "pName": "category",
+          "domain": "",
+          "type": "VARCHAR(50)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "R7YPzai9Qe3aAfoPP",
+          "name": "title",
+          "pName": "title",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "mSAM2S2rY6skSC3Gr",
+          "name": "content",
+          "pName": "content",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "ykTGtWaYtu9XGYhzv",
+          "name": "likes_count",
+          "pName": "likes_count",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "0",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "pebRWazcriqioukQg",
+          "name": "view_count",
+          "pName": "view_count",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "0",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "72Yyv4WzxzYNGdSdD",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "XtyCNsirBS7ajouEs",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "oAvt7woGJ6vxFZRzZ",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "comments",
+      "name": "comments",
+      "position": {
+        "x": 2900,
+        "y": 1110
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "eXt8vDyZJSCf9sRJd",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "ZaEw5GrhkoW6L3pj9",
+          "name": "post_id",
+          "pName": "post_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "mCLM39zMWuWEfKQHS",
+          "relFieldId": "PrEnc9hPAncdWa6eC",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "BJPiZp6wcsYpQPahE",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "qDrieEuNGzfDnc3i3",
+          "name": "content",
+          "pName": "content",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "WsuWEJqknM72zhXXb",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "obYn3PYHziDHzMoLJ",
+          "name": "updated_at",
+          "pName": "updated_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "vT6mEfgMzFkpDySDR",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "post_likes",
+      "name": "post_likes",
+      "position": {
+        "x": 3610,
+        "y": 1130
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "NmLvThJvdpNCjbJ28",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "CgNjimFDWC5XZo9ok",
+          "name": "user_id",
+          "pName": "user_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "QF6mbtYaESKC5Zn22",
+          "relFieldId": "noGWJqbRFhQtG8du5",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "BDB9oABR7qt26GbFq",
+          "name": "post_id",
+          "pName": "post_id",
+          "domain": "",
+          "type": "INT",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": "mCLM39zMWuWEfKQHS",
+          "relFieldId": "PrEnc9hPAncdWa6eC",
+          "relType": "ZERO_OR_ONE_OR_MANY"
+        },
+        {
+          "_id": "cFTiunHsJD9pMfHaS",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "D7zZJEjYhi7sAWwYt",
+          "name": "UNIQUE(user_id,",
+          "pName": "UNIQUE(user_id,",
+          "domain": "",
+          "type": "post_id)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "LKYbNY8XSj8fMzaaG",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "banks",
+      "name": "banks",
+      "position": {
+        "x": 5060,
+        "y": 1060
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "CspchK2L8fRbg7sS2",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "AZwtdnNPPRXp63M8e",
+          "name": "bank_name",
+          "pName": "bank_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "HFPYd64fFc4nDxCpu",
+          "name": "branch_name",
+          "pName": "branch_name",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "RjpdLejKRWGbNBfAc",
+          "name": "address",
+          "pName": "address",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "bgfJ85hNo584xLPwj",
+          "name": "latitude",
+          "pName": "latitude",
+          "domain": "",
+          "type": "DECIMAL(10,7)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "3gKtsNb9pXPGyhidC",
+          "name": "longitude",
+          "pName": "longitude",
+          "domain": "",
+          "type": "DECIMAL(10,7)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "fR6c7rk6BAjCmaAzx",
+          "name": "phone",
+          "pName": "phone",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "LnJYbm35YT5BRR3Yf",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "news",
+      "name": "news",
+      "position": {
+        "x": 5070,
+        "y": 800
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "9u7MKzWQ6SkbgKh8z",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "S8Wg6pMhhapkNMbKD",
+          "name": "title",
+          "pName": "title",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "aCopsAzSwsENHQmKX",
+          "name": "summary",
+          "pName": "summary",
+          "domain": "",
+          "type": "TEXT",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "TCEJjguPvMokLY24Z",
+          "name": "url",
+          "pName": "url",
+          "domain": "",
+          "type": "VARCHAR(500)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "qSxpP6vtCkf6Cmw3o",
+          "name": "publisher",
+          "pName": "publisher",
+          "domain": "",
+          "type": "VARCHAR(255)",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "B4cwtCGRrYSvGrEeE",
+          "name": "published_at",
+          "pName": "published_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "BecoXN7AoawDkTbFD",
+          "name": "created_at",
+          "pName": "created_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    },
+    {
+      "_id": "jDvxj7jjKjLamTsxk",
+      "_diagramId": "cCtdaQvXmoMmJvZYx",
+      "pName": "commodity_prices",
+      "name": "commodity_prices",
+      "position": {
+        "x": 5060,
+        "y": 1330
+      },
+      "keys": {
+        "pks": [
+          {
+            "_id": "hJBxnQG3i6g5FHJW6",
+            "name": "id",
+            "pName": "id",
+            "domain": "",
+            "type": "INT",
+            "defaultValue": "",
+            "isAllowNull": false,
+            "comment": "",
+            "relEntity": null,
+            "relFieldId": null,
+            "relType": null
+          }
+        ],
+        "fks": []
+      },
+      "fields": [
+        {
+          "_id": "3p8N55ExpjTdvKa2r",
+          "name": "commodity_type",
+          "pName": "commodity_type",
+          "domain": "",
+          "type": "VARCHAR(50)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "sjSepR87xkY4HoZXh",
+          "name": "price",
+          "pName": "price",
+          "domain": "",
+          "type": "DECIMAL(12,2)",
+          "defaultValue": "",
+          "isAllowNull": false,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        },
+        {
+          "_id": "5QLAHGjx9btdjPfsw",
+          "name": "recorded_at",
+          "pName": "recorded_at",
+          "domain": "",
+          "type": "DATETIME",
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "isAllowNull": true,
+          "comment": "",
+          "relEntity": null,
+          "relFieldId": null,
+          "relType": null
+        }
+      ],
+      "color": "rgba(10, 10, 10, 0.5)"
+    }
+  ],
+  "memoData": [],
+  "domainData": [],
+  "createdAt": "2026-06-22T04:33:38.940Z",
+  "creatorName": "luster-woo",
+  "creatorThumb": "https://avatars3.githubusercontent.com/u/167078198"
+}
