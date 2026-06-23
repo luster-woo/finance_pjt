@@ -1,181 +1,263 @@
-# 💰 FinMate - 사회초년생 맞춤 금융 추천 플랫폼
+API Specification
 
-## 📌 프로젝트 소개
+1. Accounts API (회원 관리)
 
-FinMate는 예·적금 가입 경험이 없는 사회초년생(20대 중후반)을 대상으로 한 금융 상품 추천 서비스입니다.
+회원가입
 
-사용자의 금융 성향을 분석하여 맞춤형 예금·적금 상품을 추천하고, 상품 비교 및 만기 예상 금액 계산 기능을 제공합니다. 또한 카드 혜택 정보, 주식 추천, 금융 뉴스, 주식 커뮤니티 기능을 통해 종합 금융 플랫폼 서비스를 제공합니다.
+* Method: POST
+* URL: /accounts/signup/
 
----
+로그인
 
-## 🎯 주요 대상
+* Method: POST
+* URL: /accounts/login/
 
-* 예·적금 가입 경험이 없는 사회초년생
-* 금융 상품 선택이 어려운 사용자
-* 투자 및 재테크를 처음 시작하는 사용자
+로그아웃
 
----
+* Method: POST
+* URL: /accounts/logout/
 
-## 🛠 주요 기능
+내 정보 조회
 
-### 1. 회원 관리
+* Method: GET
+* URL: /accounts/profile/
 
-* 회원가입
-* 로그인
-* 마이페이지
+내 정보 수정
 
-### 2. 금융 상품 조회
-
-* 예금 상품 조회
-* 적금 상품 조회
-* 상품 검색
-* 정렬(Sort) 기능
-* 상품 상세 정보 조회
-
-### 3. 금융 상품 추천
-
-* 금융 성향 테스트
-* 맞춤형 상품 추천
-* 추천 근거 제공
-
-### 4. 금융 상품 분석
-
-* 우대금리 조건 분석
-* 만기 예상 금액 계산기
-* 상품 비교 기능
-
-### 5. 사용자 리뷰
-
-* 별점 평가
-* 한줄평 작성 및 조회
-
-### 6. 관심 상품 관리
-
-* 관심 상품 등록
-* 최근 본 상품 조회
-
-### 7. 은행 정보 제공
-
-* 지도 기반 은행 위치 조회
-* 가까운 은행 검색
-* 은행 상세 정보 제공
+* Method: PUT
+* URL: /accounts/profile/
 
 ---
 
-## ✨ 추가 기능
+2. Financial Test & AI API (성향 테스트 및 추천)
 
-### 카드 정보 서비스
+금융 성향 테스트 제출
 
-* 카드 종류별 혜택 정리
-* 카드 상세 정보
-* 카드 별점 및 한줄평
+* Method: POST
+* URL: /tests/
 
-### 주식 추천 서비스
+금융 성향 결과 조회
 
-* 사용자 맞춤 주식 추천
-* 추천 근거 제공
-* 관심 종목 관리
+* Method: GET
+* URL: /tests/result/
 
-### 주식 커뮤니티
+AI 예적금 추천 조회
 
-* 게시글 작성
-* 게시글 조회
-* 댓글 기능
-* 좋아요 기능
+* Method: GET
+* URL: /tests/recommendations/products/
 
-### 금융 뉴스
+AI 주식 추천 조회
 
-* 최신 금융 뉴스 제공
-* 투자 및 경제 정보 제공
+* Method: GET
+* URL: /tests/recommendations/stocks/
 
 ---
 
-## 📂 화면 구성
+3. Financial Products API (예적금)
 
-### HomeView
+전체 금융상품 조회
 
-* 메인 페이지
+* Method: GET
+* URL: /products/
 
-### ProductListView
+금융상품 상세 조회
 
-* 예금 상품 목록
-* 적금 상품 목록
-* 검색 기능
-* 정렬 기능
+* Method: GET
+* URL: /products/[int:product_id](int:product_id)/
 
-### ProductDetailView
+관심상품 등록/취소
 
-* 상품 상세 정보
-* 우대금리 분석
-* 만기 계산기
-* 별점 및 한줄평
-* 관심 상품 등록
+* Method: POST
+* URL: /products/[int:product_id](int:product_id)/favorite/
 
-### RecommendationView
+가입상품 등록/취소
 
-* 금융 성향 테스트
-* 추천 상품 결과
-* 추천 근거 제공
+* Method: POST
+* URL: /products/[int:product_id](int:product_id)/subscribe/
 
-### CompareView
+최근 본 상품 기록
 
-* 금융 상품 비교
-
-### BankMapView
-
-* 지도 기반 은행 조회
-* 은행 상세 정보
-
-### CardView
-
-* 카드 혜택 조회
-* 카드 상세 정보
-* 별점 및 한줄평
-
-### StockView
-
-* 주식 추천
-* 추천 근거 제공
-* 관심 종목 관리
-
-### StockCommunityView
-
-* 게시글 목록
-* 게시글 상세
-* 댓글
-* 좋아요
-
-### StockCommunityCreateView
-
-* 게시글 작성
-
-### NewsView
-
-* 금융 뉴스 조회
-
-### LoginView
-
-* 로그인
-
-### SignupView
-
-* 회원가입
-
-### MyPageView
-
-* 회원 정보 관리
-* 관심 상품 조회
-* 최근 본 상품 조회
-* 금융 성향 결과 확인
-* 작성한 리뷰 조회
-* 관심 종목 조회
+* Method: POST
+* URL: /products/[int:product_id](int:product_id)/recent/
 
 ---
 
-## 💡 기대 효과
+4. Favorite & Subscription API
 
-* 사회초년생의 금융 상품 선택 지원
-* 맞춤형 금융 상품 추천 제공
-* 금융 정보 접근성 향상
-* 올바른 투자 및 재테크 습관 형성
-* 금융 커뮤니티를 통한 정보 공유 활성화
+관심 상품 조회
+
+* Method: GET
+* URL: /mypage/products/favorites/
+
+가입 상품 조회
+
+* Method: GET
+* URL: /mypage/products/subscriptions/
+
+최근 본 상품 조회
+
+* Method: GET
+* URL: /mypage/products/recent/
+
+---
+
+5. Product Review API
+
+리뷰 조회
+
+* Method: GET
+* URL: /products/[int:product_id](int:product_id)/reviews/
+
+리뷰 작성
+
+* Method: POST
+* URL: /products/[int:product_id](int:product_id)/reviews/
+
+리뷰 수정
+
+* Method: PUT
+* URL: /reviews/products/[int:review_id](int:review_id)/
+
+리뷰 삭제
+
+* Method: DELETE
+* URL: /reviews/products/[int:review_id](int:review_id)/
+
+---
+
+6. Card API
+
+전체 카드 조회
+
+* Method: GET
+* URL: /cards/
+
+카드 상세 조회
+
+* Method: GET
+* URL: /cards/[int:card_id](int:card_id)/
+
+카드 혜택 조회
+
+* Method: GET
+* URL: /cards/[int:card_id](int:card_id)/benefits/
+
+---
+
+7. Card Review API
+
+카드 리뷰 조회
+
+* Method: GET
+* URL: /cards/[int:card_id](int:card_id)/reviews/
+
+카드 리뷰 작성
+
+* Method: POST
+* URL: /cards/[int:card_id](int:card_id)/reviews/
+
+카드 리뷰 수정
+
+* Method: PUT
+* URL: /reviews/cards/[int:review_id](int:review_id)/
+
+카드 리뷰 삭제
+
+* Method: DELETE
+* URL: /reviews/cards/[int:review_id](int:review_id)/
+
+---
+
+8. Stock API
+
+전체 종목 조회
+
+* Method: GET
+* URL: /stocks/
+
+종목 상세 조회
+
+* Method: GET
+* URL: /stocks/[int:stock_id](int:stock_id)/
+
+최신 시세 조회
+
+* Method: GET
+* URL: /stocks/[int:stock_id](int:stock_id)/latest-price/
+
+시세 이력 조회
+
+* Method: GET
+* URL: /stocks/[int:stock_id](int:stock_id)/prices/
+
+관심 종목 등록/취소
+
+* Method: POST
+* URL: /stocks/[int:stock_id](int:stock_id)/favorite/
+
+---
+
+9. Favorite Stock API
+
+관심 종목 조회
+
+* Method: GET
+* URL: /mypage/stocks/favorites/
+
+---
+
+10. Community API
+
+전체 게시글 조회
+
+* Method: GET
+* URL: /community/posts/
+
+게시글 작성
+
+* Method: POST
+* URL: /community/posts/
+
+게시글 상세 조회
+
+* Method: GET
+* URL: /community/posts/[int:post_id](int:post_id)/
+
+게시글 수정
+
+* Method: PUT
+* URL: /community/posts/[int:post_id](int:post_id)/
+
+게시글 삭제
+
+* Method: DELETE
+* URL: /community/posts/[int:post_id](int:post_id)/
+
+좋아요 등록/취소
+
+* Method: POST
+* URL: /community/posts/[int:post_id](int:post_id)/like/
+
+---
+
+11. Comment API
+
+댓글 조회
+
+* Method: GET
+* URL: /community/posts/[int:post_id](int:post_id)/comments/
+
+댓글 작성
+
+* Method: POST
+* URL: /community/posts/[int:post_id](int:post_id)/comments/
+
+댓글 수정
+
+* Method: PUT
+* URL: /community/comments/[int:comment_id](int:comment_id)/
+
+댓글 삭제
+
+* Method: DELETE
+* URL: /community/comments/[int:comment_id](int:comment_id)/
