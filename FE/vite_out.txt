@@ -1,0 +1,27 @@
+
+> pjt-front@0.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v8.0.16[39m  [2mready in [0m[1m741[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m오전 11:24:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: kakao.maps.event.addListenerOnce is not a function
+[39m > navigator.geolocation.getCurrentPosition.loading.value src/views/banks/BankMapView.vue:264:23
+    262 |  
+    263 |        // 2. 지도 이동 완료(idle) 후 주변 은행 검색
+    264 |        kakao.maps.event.addListenerOnce(map.value, 'idle', () => {
+        |                         ^
+    265 |          // bounds-based 검색 → 실패 시 location-based fallback
+    266 |          const ps = new kakao.maps.services.Places();
+
+[2m오전 11:26:01[22m [36m[1m[vite][22m[39m [32m../.env changed, restarting server...[39m
+[2m오전 11:26:01[22m [36m[1m[vite][22m[39m server restarted.
+[2m오전 11:26:01[22m [36m[1m[vite][22m[39m [32m../.env changed, restarting server...[39m
+[2m오전 11:26:01[22m [36m[1m[vite][22m[39m server restarted.
+[2m오전 11:26:21[22m [36m[1m[vite][22m[39m [32m../.env changed, restarting server...[39m
+[2m오전 11:26:21[22m [36m[1m[vite][22m[39m server restarted.

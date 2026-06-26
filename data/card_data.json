@@ -1,0 +1,331 @@
+[
+  {
+    "card_name": "KB국민 노리2 체크카드",
+    "company": "KB국민",
+    "card_type": "체크",
+    "min_performance": 200000,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "생활", "detail": "대중교통 10% 할인"},
+      {"category": "커피", "detail": "스타벅스/커피빈 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "신한카드 처음",
+    "company": "신한",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "쇼핑", "detail": "쿠팡/네이버쇼핑 5% 적립"},
+      {"category": "구독", "detail": "넷플릭스 50% 할인"}
+    ]
+  },
+  {
+    "card_name": "삼성카드 taptap DIGITAL",
+    "company": "삼성",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "온라인", "detail": "스트리밍 50% 결제일 할인"},
+      {"category": "쇼핑", "detail": "쿠팡/마켓컬리 5% 할인"}
+    ]
+  },
+  {
+    "card_name": "KB Youth Club 체크카드",
+    "company": "KB국민",
+    "card_type": "체크",
+    "min_performance": 200000,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "생활", "detail": "OTT, APP, 편의점 등 최대 50% 할인"},
+      {"category": "쇼핑", "detail": "패션, 배달, 편의점 등 최대 50% 할인"}
+    ]
+  },
+  {
+    "card_name": "ONE 체크카드",
+    "company": "케이뱅크",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "교통", "detail": "대중교통요금 최대 53% 캐쉬백"}
+    ]
+  },
+  {
+    "card_name": "롯데 LOCA LIKIT 1.2",
+    "company": "롯데",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "할인", "detail": "국내외 모든 가맹점 1.2% 할인"},
+      {"category": "할인", "detail": "온라인 결제 시 1.5% 할인"}
+    ]
+  },
+  {
+    "card_name": "신한카드 Mr.Life",
+    "company": "신한",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 15000,
+    "benefits": [
+      {"category": "공과금", "detail": "전기/도시가스 요금 10% 할인"},
+      {"category": "생활", "detail": "편의점/병원/약국 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "KB국민 노리2 체크카드 (Global)",
+    "company": "KB국민",
+    "card_type": "체크",
+    "min_performance": 200000,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "커피", "detail": "스타벅스 10% 할인"},
+      {"category": "문화", "detail": "영화/놀이공원 할인"}
+    ]
+  },
+  {
+    "card_name": "삼성카드 iD SELECT ALL",
+    "company": "삼성",
+    "card_type": "신용",
+    "min_performance": 500000,
+    "annual_fee": 19000,
+    "benefits": [
+      {"category": "주유", "detail": "주유소 리터당 100원 할인"},
+      {"category": "쇼핑", "detail": "백화점/할인점 1% 할인"}
+    ]
+  },
+  {
+    "card_name": "신한카드 B.Big (삑)",
+    "company": "신한",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "교통", "detail": "버스/지하철 일 최대 600원 할인"},
+      {"category": "쇼핑", "detail": "백화점 5% 할인"}
+    ]
+  },
+  {
+    "card_name": "NH농협 올바른 FLEX 카드",
+    "company": "농협",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "스트리밍", "detail": "유튜브 프리미엄/넷플릭스 20% 할인"},
+      {"category": "배달", "detail": "배달의민족 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "현대카드 ZERO Edition3 (할인형)",
+    "company": "현대",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 15000,
+    "benefits": [
+      {"category": "할인", "detail": "모든 가맹점 0.8% 할인"},
+      {"category": "생활", "detail": "생활 필수 영역 1.5% 할인"}
+    ]
+  },
+  {
+    "card_name": "우리카드 카드의정석 EVERY 1",
+    "company": "우리",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 12000,
+    "benefits": [
+      {"category": "할인", "detail": "전 가맹점 1% 할인"},
+      {"category": "포인트", "detail": "네이버페이 등 포인트 적립"}
+    ]
+  },
+  {
+    "card_name": "KB국민 My WE:SH",
+    "company": "KB국민",
+    "card_type": "신용",
+    "min_performance": 400000,
+    "annual_fee": 15000,
+    "benefits": [
+      {"category": "음식점", "detail": "음식점 10% 할인"},
+      {"category": "구독", "detail": "OTT 30% 할인"}
+    ]
+  },
+  {
+    "card_name": "삼성카드 taptap O",
+    "company": "삼성",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "교통", "detail": "대중교통 10% 할인"},
+      {"category": "커피", "detail": "커피 50% 할인"}
+    ]
+  },
+  {
+    "card_name": "신한카드 Deep Dream",
+    "company": "신한",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 8000,
+    "benefits": [
+      {"category": "포인트", "detail": "전 가맹점 0.7% 적립"},
+      {"category": "생활", "detail": "자주 가는 곳 3.5% 적립"}
+    ]
+  },
+  {
+    "card_name": "하나카드 원더카드 FREE",
+    "company": "하나",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 12000,
+    "benefits": [
+      {"category": "할인", "detail": "국내 전 가맹점 0.7% 할인"},
+      {"category": "해외", "detail": "해외 결제 1.5% 할인"}
+    ]
+  },
+  {
+    "card_name": "우리 NU I&U 카드",
+    "company": "우리",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 12000,
+    "benefits": [
+      {"category": "할인", "detail": "국내외 가맹점 0.7% 할인"},
+      {"category": "주유", "detail": "주유 리터당 60원 할인"}
+    ]
+  },
+  {
+    "card_name": "현대카드 Z family",
+    "company": "현대",
+    "card_type": "신용",
+    "min_performance": 400000,
+    "annual_fee": 10000,
+    "benefits": [
+      {"category": "쇼핑", "detail": "온라인 쇼핑 10% 할인"},
+      {"category": "생활", "detail": "배달앱 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "KB국민 다담카드",
+    "company": "KB국민",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 15000,
+    "benefits": [
+      {"category": "포인트", "detail": "SK주유소 리터당 60점 적립"},
+      {"category": "쇼핑", "detail": "대형마트 5% 적립"}
+    ]
+  },
+  {
+    "card_name": "신한카드 구독 좋아요",
+    "company": "신한",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 15000,
+    "benefits": [
+      {"category": "구독", "detail": "OTT/음원 50% 할인"},
+      {"category": "생활", "detail": "쿠팡/배달앱 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "삼성카드 4",
+    "company": "삼성",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 5000,
+    "benefits": [
+      {"category": "할인", "detail": "모든 가맹점 0.7% 할인"},
+      {"category": "영화", "detail": "영화관 2,500원 할인"}
+    ]
+  },
+  {
+    "card_name": "롯데 LOCA 365",
+    "company": "롯데",
+    "card_type": "신용",
+    "min_performance": 500000,
+    "annual_fee": 20000,
+    "benefits": [
+      {"category": "생활", "detail": "아파트 관리비/공과금 10% 할인"},
+      {"category": "교통", "detail": "대중교통 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "우리카드 DA@카드의정석",
+    "company": "우리",
+    "card_type": "신용",
+    "min_performance": 0,
+    "annual_fee": 5000,
+    "benefits": [
+      {"category": "할인", "detail": "모든 가맹점 0.8% 할인"},
+      {"category": "생활", "detail": "편의점 1.3% 할인"}
+    ]
+  },
+  {
+    "card_name": "KB국민 청춘대로 톡톡",
+    "company": "KB국민",
+    "card_type": "신용",
+    "min_performance": 300000,
+    "annual_fee": 12000,
+    "benefits": [
+      {"category": "커피", "detail": "스타벅스 50% 할인"},
+      {"category": "구독", "detail": "간편결제 10% 할인"}
+    ]
+  },
+  {
+    "card_name": "카카오뱅크 체크카드",
+    "company": "카카오뱅크",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "간편결제", "detail": "카카오페이 2% 적립"},
+      {"category": "생활", "detail": "편의점/카페 혜택"}
+    ]
+  },
+  {
+    "card_name": "네이버페이 체크카드",
+    "company": "신한",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "쇼핑", "detail": "네이버페이 포인트 1% 적립"},
+      {"category": "문화", "detail": "연회비 없음"}
+    ]
+  },
+  {
+    "card_name": "토스뱅크 체크카드",
+    "company": "토스뱅크",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "할인", "detail": "국내외 결제 시 캐시백"},
+      {"category": "생활", "detail": "택시/카페 등 영역별 캐시백"}
+    ]
+  },
+  {
+    "card_name": "현대카드 M Check",
+    "company": "현대",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "포인트", "detail": "이용 금액의 0.5% M포인트 적립"},
+      {"category": "생활", "detail": "외식/쇼핑 적립"}
+    ]
+  },
+  {
+    "card_name": "하나 VIVA X 체크카드",
+    "company": "하나",
+    "card_type": "체크",
+    "min_performance": 0,
+    "annual_fee": 0,
+    "benefits": [
+      {"category": "해외", "detail": "해외 가맹점 이용 수수료 면제"},
+      {"category": "해외", "detail": "해외 ATM 인출 수수료 면제"}
+    ]
+  }
+]

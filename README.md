@@ -1,263 +1,223 @@
-API Specification
+# FINFIT — 사회초년생을 위한 AI 기반 금융 추천 플랫폼
 
-1. Accounts API (회원 관리)
-
-회원가입
-
-* Method: POST
-* URL: /accounts/signup/
-
-로그인
-
-* Method: POST
-* URL: /accounts/login/
-
-로그아웃
-
-* Method: POST
-* URL: /accounts/logout/
-
-내 정보 조회
-
-* Method: GET
-* URL: /accounts/profile/
-
-내 정보 수정
-
-* Method: PUT
-* URL: /accounts/profile/
+> **"금융이 어렵던 시절은 끝났습니다. 이제 AI가 당신의 금융을 설계합니다."**
 
 ---
 
-2. Financial Test & AI API (성향 테스트 및 추천)
+## 목차
 
-금융 성향 테스트 제출
-
-* Method: POST
-* URL: /tests/
-
-금융 성향 결과 조회
-
-* Method: GET
-* URL: /tests/result/
-
-AI 예적금 추천 조회
-
-* Method: GET
-* URL: /tests/recommendations/products/
-
-AI 주식 추천 조회
-
-* Method: GET
-* URL: /tests/recommendations/stocks/
+1. [팀 정보 및 역할 분담](#1-팀-정보-및-역할-분담)
+2. [서비스 주요 기능 설명](#2-서비스-주요-기능-설명)
+3. [금융 상품 추천 알고리즘 기술적 설명](#3-금융-상품-추천-알고리즘-기술적-설명)
+4. [생성형 AI 활용 내용](#4-생성형-ai-활용-내용)
+5. [프로젝트 후기 및 느낀 점](#5-프로젝트-후기-및-느낀-점)
 
 ---
 
-3. Financial Products API (예적금)
+## 1. 팀 정보 및 역할 분담
 
-전체 금융상품 조회
+### 팀명: 13_pjt
 
-* Method: GET
-* URL: /products/
+| 이름 | 역할 | 담당 기능 |
+|------|------|-----------|
+| 이윤우 | 팀장 / BE | Django 전체 API 설계, 금융성향검사 로직, AI 추천 엔진, 주식·상품 데이터 import, JWT 인증 |
+| 이진웅 | FE | Vue.js 전체 화면 구현, 차트 시각화, 카카오맵 연동, 컴포넌트 설계, 라우팅 |
 
-금융상품 상세 조회
-
-* Method: GET
-* URL: /products/[int:product_id](int:product_id)/
-
-관심상품 등록/취소
-
-* Method: POST
-* URL: /products/[int:product_id](int:product_id)/favorite/
-
-가입상품 등록/취소
-
-* Method: POST
-* URL: /products/[int:product_id](int:product_id)/subscribe/
-
-최근 본 상품 기록
-
-* Method: POST
-* URL: /products/[int:product_id](int:product_id)/recent/
+> 공통: DB 모델링, API 명세서 작성, 테스트, 발표 자료 제작
 
 ---
 
-4. Favorite & Subscription API
+## 2. 서비스 주요 기능 설명
 
-관심 상품 조회
+### 2-1. 금융성향검사
 
-* Method: GET
-* URL: /mypage/products/favorites/
+사용자의 투자 성향을 정밀 진단하는 10문항 설문입니다.
 
-가입 상품 조회
+- **측정 지표**: 위험수용도, 원금보장 선호, 장기투자 여부, 정보 분석력, 하락 대응력, 충동투자 성향, 분산투자 인식, 금융 이해도, FOMO 충동성, 수익 목표
+- **역방향 문항**: Q2·Q6·Q9 — 응답 신뢰도 확보를 위해 역산(6 - 응답값) 처리
+- **결과**: 0~100점 정규화 → 5가지 성향 + 4축 성향 코드(ARLN 방식) 생성
 
-* Method: GET
-* URL: /mypage/products/subscriptions/
+| 성향 | 점수 범위 | 특징 |
+|------|-----------|------|
+| 안정형 | ~30점 | 원금보장 최우선, 예금·적금 선호 |
+| 안정추구형 | 31~45점 | 소극적 성장, 채권 혼합 |
+| 위험중립형 | 46~60점 | 균형 포트폴리오 |
+| 적극투자형 | 61~75점 | 성장주 중심 |
+| 공격투자형 | 76~100점 | 고위험·고수익 추구 |
 
-최근 본 상품 조회
+**4축 성향 코드** (MBTI 형식)
 
-* Method: GET
-* URL: /mypage/products/recent/
+```
+Risk     A(공격형) / S(안정형)   ← Q1·Q2·Q10
+Rational R(이성형) / E(감정형)   ← Q5·Q6·Q9
+Longterm L(장기형) / T(단기형)   ← Q3
+Active   N(능동형) / P(수동형)   ← Q4·Q7·Q8
 
----
-
-5. Product Review API
-
-리뷰 조회
-
-* Method: GET
-* URL: /products/[int:product_id](int:product_id)/reviews/
-
-리뷰 작성
-
-* Method: POST
-* URL: /products/[int:product_id](int:product_id)/reviews/
-
-리뷰 수정
-
-* Method: PUT
-* URL: /reviews/products/[int:review_id](int:review_id)/
-
-리뷰 삭제
-
-* Method: DELETE
-* URL: /reviews/products/[int:review_id](int:review_id)/
+예시: "ARLN" = 공격적·이성적·장기·능동형
+```
 
 ---
 
-6. Card API
+### 2-2. AI 맞춤 금융상품 추천 (예금·적금)
 
-전체 카드 조회
-
-* Method: GET
-* URL: /cards/
-
-카드 상세 조회
-
-* Method: GET
-* URL: /cards/[int:card_id](int:card_id)/
-
-카드 혜택 조회
-
-* Method: GET
-* URL: /cards/[int:card_id](int:card_id)/benefits/
+- **입력**: 투자 금액, 투자 기간(1·3·6·12·24·36개월), 금융 성향
+- **출력**: Top 3 금융상품 + AI 추천 점수(0~100) + 한국어 추천 이유
+- **데이터 출처**: 금융상품통합비교공시 API (FSS Finlife)
+- **결과 캐싱**: AIProductRecommendation 모델에 저장 → 재요청 시 DB에서 즉시 반환
 
 ---
 
-7. Card Review API
+### 2-3. AI 맞춤 카드 추천
 
-카드 리뷰 조회
-
-* Method: GET
-* URL: /cards/[int:card_id](int:card_id)/reviews/
-
-카드 리뷰 작성
-
-* Method: POST
-* URL: /cards/[int:card_id](int:card_id)/reviews/
-
-카드 리뷰 수정
-
-* Method: PUT
-* URL: /reviews/cards/[int:review_id](int:review_id)/
-
-카드 리뷰 삭제
-
-* Method: DELETE
-* URL: /reviews/cards/[int:review_id](int:review_id)/
+- **입력**: 주요 소비 카테고리 (식비·교통·카페·온라인쇼핑·주유·여행·구독·의료)
+- **출력**: Top 3 카드 + AI 추천 이유 (소비 패턴 매칭 기반)
+- **카드 상세**: 혜택 목록, 연회비, 최소 실적 조건, 사용자 리뷰
 
 ---
 
-8. Stock API
+### 2-4. AI 맞춤 주식 추천
 
-전체 종목 조회
-
-* Method: GET
-* URL: /stocks/
-
-종목 상세 조회
-
-* Method: GET
-* URL: /stocks/[int:stock_id](int:stock_id)/
-
-최신 시세 조회
-
-* Method: GET
-* URL: /stocks/[int:stock_id](int:stock_id)/latest-price/
-
-시세 이력 조회
-
-* Method: GET
-* URL: /stocks/[int:stock_id](int:stock_id)/prices/
-
-관심 종목 등록/취소
-
-* Method: POST
-* URL: /stocks/[int:stock_id](int:stock_id)/favorite/
+- **성향별 섹터 매핑**: 안정형 → 금융·배당주, 중립형 → 혼합, 공격형 → 반도체·IT·바이오
+- **실시간 시세**: yfinance 연동 (KOSPI `.KS` / KOSDAQ `.KQ`)
+- **차트**: 1일·1주·1개월·1년 기간별 인터랙티브 차트 (Chart.js)
 
 ---
 
-9. Favorite Stock API
+### 2-5. 금융 뉴스 & AI 주간 브리핑
 
-관심 종목 조회
-
-* Method: GET
-* URL: /mypage/stocks/favorites/
+- **뉴스 수집**: 한국경제·매일경제·연합뉴스·이데일리·뉴스1·파이낸셜뉴스 RSS 자동 집계
+- **AI 주간 브리핑**: 매주 월요일 성향별 경제 3줄 요약 + 행동 추천 + 금융 TIP 자동 생성
 
 ---
 
-10. Community API
+### 2-6. 부가 기능
 
-전체 게시글 조회
-
-* Method: GET
-* URL: /community/posts/
-
-게시글 작성
-
-* Method: POST
-* URL: /community/posts/
-
-게시글 상세 조회
-
-* Method: GET
-* URL: /community/posts/[int:post_id](int:post_id)/
-
-게시글 수정
-
-* Method: PUT
-* URL: /community/posts/[int:post_id](int:post_id)/
-
-게시글 삭제
-
-* Method: DELETE
-* URL: /community/posts/[int:post_id](int:post_id)/
-
-좋아요 등록/취소
-
-* Method: POST
-* URL: /community/posts/[int:post_id](int:post_id)/like/
+| 기능 | 설명 |
+|------|------|
+| 원자재 시세 | 금(GC=F)·은(SI=F) USD/oz 기간별 차트 |
+| 주변 은행 찾기 | 카카오맵 API 기반 지점 위치 안내 |
+| 커뮤니티 | 종목별 토론 게시판, 댓글·대댓글, 좋아요 |
+| 상품 리뷰 | 금융상품·카드 리뷰 및 평점 |
+| 마이페이지 | 즐겨찾기·가입상품·최근 조회 이력 관리 |
 
 ---
 
-11. Comment API
+## 3. 금융 상품 추천 알고리즘 기술적 설명
 
-댓글 조회
+### 3-1. 금융상품 추천 스코어링
 
-* Method: GET
-* URL: /community/posts/[int:post_id](int:post_id)/comments/
+GMS API(OpenAI 호환)를 통해 각 상품을 0~100점으로 평가합니다.
 
-댓글 작성
+| 항목 | 가중치 | 평가 기준 |
+|------|--------|-----------|
+| 금리 경쟁력 | 40% | 동기간 최고금리 대비 상대 순위 |
+| 수익 절대액 | 30% | 입력 금액·기간 기준 예상 이자액 |
+| 상품 유형 적합성 | 15% | 성향별 예금/적금 선호도 매핑 |
+| 은행 신뢰도 | 15% | 시중은행 > 저축은행 > 인터넷은행 |
 
-* Method: POST
-* URL: /community/posts/[int:post_id](int:post_id)/comments/
+```
+총점 = 금리 경쟁력(40%) + 수익 절대액(30%) + 상품 유형 적합성(15%) + 은행 신뢰도(15%)
+```
 
-댓글 수정
+### 3-2. 카드 추천 스코어링
 
-* Method: PUT
-* URL: /community/comments/[int:comment_id](int:comment_id)/
+| 항목 | 가중치 | 평가 기준 |
+|------|--------|-----------|
+| 소비 카테고리 매칭 | 40% | 선택 카테고리와 카드 혜택 일치도 |
+| 혜택 수·질 | 30% | 혜택 항목 수, 할인율·적립률 |
+| 연회비 효율 | 20% | 예상 혜택 금액 대비 연회비 |
+| 전월 실적 허들 | 10% | 최소 실적 조건의 달성 용이성 |
 
-댓글 삭제
+### 3-3. 주식 추천 스코어링
 
-* Method: DELETE
-* URL: /community/comments/[int:comment_id](int:comment_id)/
+| 항목 | 가중치 | 평가 기준 |
+|------|--------|-----------|
+| 성향 적합도 | 45% | 성향-섹터 매핑 점수 (안정형→금융·배당, 공격형→반도체·바이오) |
+| 섹터 분산도 | 30% | Top 3 추천 종목이 다른 섹터가 되도록 패널티 |
+| 시가총액 안정성 | 25% | 안정형일수록 KOSPI 대형주 우선 |
+
+### 3-4. 폴백 알고리즘
+
+GMS / Gemini API 장애 시 하드코딩 수식 기반 알고리즘으로 자동 전환 — **서비스 무중단 보장**
+
+---
+
+## 4. 생성형 AI 활용 내용
+
+### 4-1. 추천 이유 생성 (GMS API — OpenAI 호환)
+
+금융상품·카드·주식 각 추천에 대해 한국어 자연어 설명을 생성합니다.
+
+```
+모델: claude-opus-4-8 (GMS) / gemini-1.5-flash (폴백)
+온도: 0.3 (일관성 우선)
+최대 토큰: 추천 이유 512 / 성향 설명 256
+```
+
+### 4-2. 성향 설명 생성
+
+검사 결과 페이지에서 사용자 맞춤 성향 설명(3~4문장)을 AI로 생성합니다.
+
+### 4-3. 주간 뉴스 브리핑 생성
+
+매주 5가지 성향별로 경제 뉴스 요약 + 행동 추천 + 금융 TIP을 자동 생성합니다.
+
+### 4-4. 주식·뉴스 정보 한국어 변환
+
+yfinance 영문 기업 설명 및 해외 뉴스 제목을 GMS로 한국어로 번역·요약합니다.
+
+### 4-5. 개발 과정에서의 AI 활용
+
+| 활용 영역 | 내용 |
+|-----------|------|
+| 코드 생성 | Serializer, URL 패턴, 반복 로직 자동 작성 |
+| 디버깅 | 에러 메시지 분석 및 해결 방안 도출 |
+| 알고리즘 설계 | 스코어링 가중치 및 프롬프트 엔지니어링 최적화 |
+| 데이터 구축 | 카드사별 혜택 데이터 구조화 및 시드 데이터 생성 |
+| 코드 리뷰 | 보안 취약점 탐지 및 수정 제안 |
+
+---
+
+## 5. 프로젝트 후기 및 느낀 점
+
+### 지눙
+
+개인 프로젝트를 수행하며 웹 서비스 개발 전반에 대한 이해를 높일 수 있었습니다. 특히 API 연동과 기능 구현을 직접 경험하면서 실무에서 필요한 개발 역량을 기를 수 있었고, 지속적인 개선을 통해 완성도를 높이는 경험을 할 수 있었습니다.
+
+### 이윤우
+
+개인 프로젝트를 진행하며 Django와 Vue를 활용한 웹 서비스 개발 과정을 직접 경험할 수 있었습니다. 기능 구현과 API 연동, 오류 해결을 반복하며 백엔드와 프론트엔드의 흐름을 이해하는 데 큰 도움이 되었습니다. 또한 문제를 스스로 분석하고 해결하는 과정에서 개발 역량과 자신감을 키울 수 있었습니다.
+
+---
+
+## 기술 스택
+
+| 분류 | 기술 |
+|------|------|
+| Frontend | Vue.js 3, Vue Router, Pinia, Axios, Chart.js |
+| Backend | Django 5, Django REST Framework, SimpleJWT |
+| Database | SQLite3 |
+| AI | GMS API (OpenAI 호환), Google Gemini API |
+| 외부 API | FSS Finlife(예적금), yfinance(주식), Kakao Maps, RSS 피드 |
+| 개발 도구 | VS Code, GitLab, Postman |
+
+---
+
+## 설치 및 실행 방법
+
+### Backend
+
+```bash
+cd BE
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+### Frontend
+
+```bash
+cd FE
+npm install
+npm run dev
+```
