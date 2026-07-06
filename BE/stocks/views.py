@@ -5,9 +5,12 @@ import requests
 import yfinance as yf
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+
+from config.pagination import StandardPagination
 
 
 def _translate_to_korean(company_name, en_text):
@@ -176,8 +179,10 @@ def stock_list(request):
         latest_price=Subquery(latest_price_qs.values('price')[:1]),
         latest_change_rate=Subquery(latest_price_qs.values('change_rate')[:1]),
     )
-    serializer = StockSerializer(stocks, many=True)
-    return Response(serializer.data)
+    paginator = StandardPagination()
+    page = paginator.paginate_queryset(stocks, request)
+    serializer = StockSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])
@@ -213,7 +218,7 @@ def stock_latest_price(request, stock_id):
             'price': str(round(current_price)) if current_price else None,
             'change_rate': str(change_rate) if change_rate is not None else None,
             'volume': None,
-            'recorded_at': datetime.datetime.now().isoformat(),
+            'recorded_at': timezone.now().isoformat(),
         })
     except Exception as exc:
         return Response({'detail': f'시세 조회 실패: {exc}'}, status=404)

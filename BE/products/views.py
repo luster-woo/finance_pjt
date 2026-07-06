@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
+from config.pagination import StandardPagination
+
 from .models import FinancialProduct, FinancialProductOption
 from .serializers import FinancialProductSerializer
 from favorites.models import Favorite, SubscribedProduct, RecentProduct
@@ -20,8 +22,10 @@ def product_list(request):
     if product_type:
         products = products.filter(product_type=product_type)
 
-    serializer = FinancialProductSerializer(products, many=True)
-    return Response(serializer.data)
+    paginator = StandardPagination()
+    page = paginator.paginate_queryset(products, request)
+    serializer = FinancialProductSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])

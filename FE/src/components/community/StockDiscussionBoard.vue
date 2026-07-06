@@ -43,7 +43,7 @@
               </div>
               <p class="comment-content">{{ c.content }}</p>
               <div class="comment-footer">
-                <button class="like-btn sm" :class="{ liked: c.is_liked }" @click="toggleCommentLike(c, post.id)">
+                <button class="like-btn sm" :class="{ liked: c.is_liked }" @click="toggleCommentLike(c)">
                   ♥ {{ c.likes_count }}
                 </button>
                 <button class="reply-write-btn" @click="setReplyTarget(post.id, c.id, c.username)">답글</button>
@@ -60,7 +60,7 @@
                       <button v-if="r.user === myUserId" class="del-btn" @click="deleteComment(r.id, post.id)">삭제</button>
                     </div>
                     <p class="comment-content">{{ r.content }}</p>
-                    <button class="like-btn sm" :class="{ liked: r.is_liked }" @click="toggleCommentLike(r, post.id)">
+                    <button class="like-btn sm" :class="{ liked: r.is_liked }" @click="toggleCommentLike(r)">
                       ♥ {{ r.likes_count }}
                     </button>
                   </div>
@@ -203,7 +203,7 @@ async function deleteComment(commentId, postId) {
   } catch { /* ignore */ }
 }
 
-async function toggleCommentLike(comment, postId) {
+async function toggleCommentLike(comment) {
   if (!isLoggedIn.value) return
   try {
     const { data } = await api.post(`/community/comments/${comment.id}/like/`)

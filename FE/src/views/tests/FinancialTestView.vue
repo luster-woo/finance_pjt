@@ -175,9 +175,8 @@ const submitTest = async () => {
       .map(key => answers.value[key])
 
     // 데이터 전송 형태: { answers: [5, 2, 4, 4, 5, ...] }
-    const response = await api.post('/tests/', { answers: answersArray })
+    await api.post('/tests/', { answers: answersArray })
 
-    
     router.push('/test/result')
 
   } catch (error) {

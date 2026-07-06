@@ -1,64 +1,9 @@
 """
-금융상품 추천 알고리즘 및 AI 프롬프트 생성
+금융상품 추천 폴백 알고리즘
+
+GMS / Gemini API 장애 시 recommendation_service.py에서 호출하는
+순수 수식 기반 스코어링 함수입니다. AI 호출 없이 동작합니다.
 """
-
-
-def generate_recommendation_prompt(test_score, result_type, product, product_option, desired_amount=1000000):
-    """
-    AI 추천 프롬프트 생성
-    
-    Args:
-        test_score: 금융성향 점수 (0-100)
-        result_type: 성향 타입 ('안정형', '안정추구형', '위험중립형', '적극투자형', '공격투자형')
-        product: FinancialProduct 인스턴스
-        product_option: FinancialProductOption 인스턴스
-        desired_amount: 예상 금액 (기본 100만원)
-    
-    Returns:
-        dict: 프롬프트 정보
-    """
-    
-    prompt = f"""
-사용자의 금융상품 추천 점수를 계산해주세요.
-
-사용자 정보:
-- 금융성향 점수: {test_score}/100
-- 성향 타입: {result_type}
-- 예상 투자 금액: {desired_amount:,}원
-
-상품 정보:
-- 상품명: {product.product_name}
-- 은행: {product.bank_name}
-- 상품타입: {product.product_type}
-- 가입기간: {product_option.save_trm}개월
-- 이자율: {product_option.interest_rate or 0}%
-- 최고이자율: {product_option.max_interest_rate or 0}%
-
-다음 기준으로 0~100점을 부여해주세요:
-1. 성향과 상품의 적합도 (위험도)
-2. 기간과 사용자 목표의 부합도
-3. 이자율 경쟁력
-4. 자금 규모와 상품의 적합도
-
-JSON 형식으로 응답:
-{{
-    "score": <0-100의 숫자>,
-    "reason": "추천 이유",
-    "pros": ["장점1", "장점2"],
-    "cons": ["단점1", "단점2"]
-}}
-"""
-    
-    return {
-        'score': test_score,
-        'result_type': result_type,
-        'product_name': product.product_name,
-        'product_type': product.product_type,
-        'period': product_option.save_trm,
-        'interest_rate': product_option.interest_rate,
-        'desired_amount': desired_amount,
-        'prompt': prompt,
-    }
 
 
 def calculate_recommendation_score_algorithm(test_score, result_type, product, product_option, desired_amount=1000000):
@@ -181,29 +126,3 @@ def calculate_recommendation_score_algorithm(test_score, result_type, product, p
     }
 
 
-def call_ai_recommendation_api(prompt_data):
-    """
-    AI API를 호출하여 추천 점수 계산 (미구현 - 추후 GMS API 또는 다른 AI 연동)
-    
-    Args:
-        prompt_data: generate_recommendation_prompt에서 반환한 dict
-    
-    Returns:
-        dict: {'score': 0-100, 'reason': str}
-    
-    참고: 현재는 알고리즘 기반, 추후 다음과 같이 연동 가능:
-    - GMS API (사용자 언급)
-    - OpenAI GPT API
-    - 네이버 Papago API
-    - 기타 LLM
-    """
-    
-    # TODO: AI API 연동 구현
-    # response = requests.post(
-    #     'https://api.example.com/recommend',
-    #     json=prompt_data,
-    #     headers={'Authorization': f'Bearer {settings.AI_API_KEY}'}
-    # )
-    # return response.json()
-    
-    raise NotImplementedError("AI API 연동은 추후 구현 예정")

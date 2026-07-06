@@ -289,7 +289,7 @@ async function drawRoute() {
     path.forEach(p => bounds.extend(p));
     bounds.extend(new kakao.maps.LatLng(origin.lat, origin.lng));
     map.value.setBounds(bounds);
-  } catch (e) {
+  } catch {
     routeError.value = '경로 조회 중 오류가 발생했습니다.';
   } finally {
     routeLoading.value = false;
@@ -439,7 +439,7 @@ function updatePlaces(data) {
   originMode.value = 'gps';
   clearRoute();
 
-  banks.value.forEach((b, idx) => {
+  banks.value.forEach((b) => {
     const position = new kakao.maps.LatLng(b.latitude, b.longitude);
     const marker = new kakao.maps.Marker({
       map: map.value,

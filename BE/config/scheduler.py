@@ -2,7 +2,7 @@
 APScheduler 기반 주기적 데이터 수집 스케줄러.
 
 등록된 작업:
-  - collect_news          : 매 6시간마다  금융/경제 RSS 뉴스 수집
+  - collect_news          : 매 3시간마다  금융/경제 RSS 뉴스 수집
   - update_stock_prices   : 매일 오후 5시  주요 종목 시세 업데이트 (장 마감 후)
   - update_commodities    : 매일 오전 8시  금·은 시세 업데이트
 """
@@ -27,28 +27,37 @@ def _collect_news():
     try:
         import time
         import re
+        import html
         import feedparser
         from news.models import News
 
         FINANCE_RSS_FEEDS = [
+            ('한국경제',      'https://www.hankyung.com/feed/economy'),
             ('한국경제',      'https://www.hankyung.com/feed/finance'),
-            ('한국경제',      'https://www.hankyung.com/feed/stock'),
-            ('매일경제',      'https://www.mk.co.kr/rss/50100032/'),
-            ('매일경제',      'https://www.mk.co.kr/rss/40300001/'),
-            ('연합뉴스',      'https://www.yna.co.kr/RSS/economy.xml'),
-            ('연합뉴스',      'https://www.yna.co.kr/RSS/market.xml'),
-            ('이데일리',      'https://rss.edaily.co.kr/edaily/section/economy.xml'),
-            ('파이낸셜뉴스',  'https://www.fnnews.com/rss/fn_realnews_010100.xml'),
+            ('매일경제',      'https://www.mk.co.kr/rss/30100041/'),   # 경제
+            ('매일경제',      'https://www.mk.co.kr/rss/50200011/'),   # 증권
+            ('매일경제',      'https://www.mk.co.kr/rss/40200003/'),   # 머니 앤 리치스(재테크)
+            ('연합뉴스',      'https://www.yna.co.kr/rss/economy.xml'),
+            ('연합뉴스',      'https://www.yna.co.kr/rss/market.xml'),
         ]
 
+        # 일부 언론사는 기본 User-Agent 요청을 403으로 차단하므로 브라우저로 위장
+        RSS_USER_AGENT = (
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+            '(KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+        )
+
         import datetime
+        from django.utils.timezone import make_aware
 
         def _parse_st(st):
+            """feedparser struct_time → timezone-aware datetime (Asia/Seoul)."""
             if not st:
                 return None
             try:
-                return datetime.datetime.fromtimestamp(time.mktime(st))
-            except Exception:
+                naive = datetime.datetime.fromtimestamp(time.mktime(st))
+                return make_aware(naive)
+            except (TypeError, ValueError, OverflowError, OSError):
                 return None
 
         FINANCE_KEYWORDS = {
@@ -69,17 +78,17 @@ def _collect_news():
         created = 0
         for publisher, url in FINANCE_RSS_FEEDS:
             try:
-                parsed = feedparser.parse(url)
+                parsed = feedparser.parse(url, request_headers={'User-Agent': RSS_USER_AGENT})
             except Exception:
                 continue
             for entry in parsed.entries:
-                title = (getattr(entry, 'title', '') or '').strip()
+                title = html.unescape((getattr(entry, 'title', '') or '').strip())
                 if not title:
                     continue
                 link = getattr(entry, 'link', '') or ''
-                summary = re.sub(r'<[^>]+>', '', (
+                summary = html.unescape(re.sub(r'<[^>]+>', '', (
                     getattr(entry, 'summary', '') or getattr(entry, 'description', '') or ''
-                ).strip())[:500]
+                ).strip()))[:500]
                 if not _is_finance(title, summary):
                     continue
                 published_at = _parse_st(getattr(entry, 'published_parsed', None))
@@ -192,10 +201,10 @@ def start():
 
     _scheduler = BackgroundScheduler(timezone='Asia/Seoul')
 
-    # 뉴스: 매 6시간 (00:00, 06:00, 12:00, 18:00 KST)
+    # 뉴스: 매 3시간
     _scheduler.add_job(
         _collect_news,
-        trigger=IntervalTrigger(hours=6),
+        trigger=IntervalTrigger(hours=3),
         id='collect_news',
         replace_existing=True,
         max_instances=1,
@@ -229,13 +238,95 @@ def start():
     )
 
     _scheduler.start()
-    logger.info('[scheduler] APScheduler 시작 — 뉴스(6h), 주식(평일 17:00), 원자재(08:00), 주간브리핑(월 09:00)')
+    logger.info('[scheduler] APScheduler 시작 — 뉴스(3h), 주식(평일 17:00), 원자재(08:00), 주간브리핑(월 09:00)')
+
+
+FALLBACK_ACTIONS = {
+    '안정형 투자자': [
+        '원금 보장이 되는 정기예금·적금 위주로 여유자금을 배치하세요.',
+        '금리가 높은 특판 상품이 있는지 이번 주 상품 목록에서 확인해보세요.',
+        '투자 비중을 늘리기보다 비상금부터 3~6개월치 확보해두는 게 우선이에요.',
+    ],
+    '안정추구형 투자자': [
+        '예·적금 비중을 유지하되 일부는 우량 채권형 상품으로 분산해보세요.',
+        '고금리 적금 특판을 확인하고 만기 스케줄을 분산해 재예치하세요.',
+        '변동성이 큰 개별 종목보다 안정적인 배당주·ETF를 소액으로 검토해보세요.',
+    ],
+    '위험중립형 투자자': [
+        '예금과 ETF를 절반씩 섞어 변동성과 수익률의 균형을 맞춰보세요.',
+        '이번 주 금리 동향을 보고 예금 만기를 6개월~1년으로 조정할지 점검하세요.',
+        '분산 투자 원칙을 유지하면서 관심 섹터 비중만 소폭 조정해보세요.',
+    ],
+    '적극투자형 투자자': [
+        '관심 섹터 조정이 오면 분할 매수 기회로 활용해보세요.',
+        '성장주 비중을 유지하되 일부는 현금성 자산으로 남겨 변동성에 대비하세요.',
+        '이번 주 발표된 실적·업황 뉴스를 참고해 포트폴리오 비중을 재점검하세요.',
+    ],
+    '공격투자형 투자자': [
+        '변동성이 커진 구간은 매수 기회일 수 있으나 리스크 관리 목표가는 꼭 설정하세요.',
+        '단기 테마보다 실적이 뒷받침되는 종목 위주로 압축하는 것을 고려해보세요.',
+        '레버리지·단기 매매 비중이 과도하지 않은지 이번 주 점검해보세요.',
+    ],
+    '': [
+        '아직 금융성향 검사를 하지 않으셨다면 1분 검사로 나에게 맞는 전략을 확인해보세요.',
+        '이번 주 금리 높은 예·적금 상품을 비교해보세요.',
+        '작은 금액부터 시작해 투자 경험을 쌓아보는 것을 추천드려요.',
+    ],
+}
+
+FALLBACK_TIPS = [
+    '복리의 마법: 연 4% 적금을 10년 유지하면 원금의 약 1.48배가 됩니다. 지금 시작하는 것이 가장 빠른 방법이에요.',
+    'ISA 계좌를 활용하면 예금 이자·배당·매매차익까지 비과세 혜택을 받을 수 있어요.',
+    '비상금은 최소 생활비 3~6개월치를 파킹통장 등 유동성 높은 곳에 따로 보관하세요.',
+    '연금저축·IRP는 세액공제 한도(연 900만원)를 먼저 채우는 것이 확정 수익률이 가장 높은 절세 전략이에요.',
+    '분산 투자는 수익을 낮추는 게 아니라 변동성을 낮춰 오래 버틸 수 있게 해주는 전략입니다.',
+]
+
+RATE_KEYWORDS = ['기준금리', '한국은행', '금리', '연준', 'Fed']
+FX_KEYWORDS = ['환율', '원/달러', '달러', '엔화']
+MARKET_KEYWORDS = ['코스피', '코스닥', '증시', '주가지수']
+
+
+def _pick_news_title(news_qs, keywords, exclude_titles=()):
+    """조건에 맞는 원본(미절삭) 제목을 반환. 이미 다른 카테고리에서 쓴 제목은 제외."""
+    for n in news_qs:
+        if n['title'] in exclude_titles:
+            continue
+        if any(kw in n['title'] for kw in keywords):
+            return n['title']
+    return None
+
+
+def _truncate(title):
+    return title[:60] + ('…' if len(title) > 60 else '')
+
+
+def _build_fallback_economy_summary(recent_news):
+    used_titles = set()
+
+    rate_title = _pick_news_title(recent_news, RATE_KEYWORDS)
+    if rate_title:
+        used_titles.add(rate_title)
+    rate_desc = _truncate(rate_title) if rate_title else '이번 주 뚜렷한 금리 관련 이슈는 없었어요.'
+
+    fx_title = _pick_news_title(recent_news, FX_KEYWORDS, used_titles)
+    if fx_title:
+        used_titles.add(fx_title)
+    fx_desc = _truncate(fx_title) if fx_title else '환율은 큰 변동 없이 안정적인 흐름을 보였어요.'
+
+    market_title = _pick_news_title(recent_news, MARKET_KEYWORDS, used_titles)
+    market_desc = _truncate(market_title) if market_title else '증시는 관망세 속 특별한 이슈 없이 마감했어요.'
+    return [
+        {'title': '금리', 'desc': rate_desc},
+        {'title': '환율', 'desc': fx_desc},
+        {'title': '증시', 'desc': market_desc},
+    ]
 
 
 def _generate_weekly_briefing():
     """월요일 오전 9시 — 성향별 주간 AI 브리핑 생성."""
     try:
-        import datetime, json, requests
+        import datetime, json, random, requests
         from django.conf import settings
         from news.models import News, WeeklyBriefing
 
@@ -247,9 +338,9 @@ def _generate_weekly_briefing():
             logger.info('[scheduler] 이번 주 브리핑 이미 생성됨, 스킵')
             return
 
-        # 최신 뉴스 5건 수집
-        recent_news = list(News.objects.order_by('-published_at')[:5].values('title', 'summary'))
-        news_text = '\n'.join(f"- {n['title']}" for n in recent_news)
+        # 최신 뉴스 20건 수집 (GMS 프롬프트용 5건 + 폴백 키워드 매칭용)
+        recent_news = list(News.objects.order_by('-published_at')[:20].values('title', 'summary'))
+        news_text = '\n'.join(f"- {n['title']}" for n in recent_news[:5])
 
         api_key = (getattr(settings, 'GMS_API_KEY', '') or '').strip()
         api_url = getattr(settings, 'GMS_API_URL', '')
@@ -333,13 +424,9 @@ def _generate_weekly_briefing():
                 week_start=week_start,
                 financial_type=ft,
                 defaults={
-                    'economy_summary': data.get('economy_summary', [
-                        {'title': '금리', 'desc': '이번 주 금리 동향 정보를 불러오는 중입니다.'},
-                        {'title': '환율', 'desc': '환율 정보를 준비 중입니다.'},
-                        {'title': '증시', 'desc': '증시 정보를 준비 중입니다.'},
-                    ]),
-                    'actions': data.get('actions', ['최신 뉴스를 확인하고 투자 계획을 점검해보세요.']),
-                    'tip': data.get('tip', '꾸준한 소액 투자가 장기적으로 가장 안전한 자산 형성 방법입니다.'),
+                    'economy_summary': data.get('economy_summary') or _build_fallback_economy_summary(recent_news),
+                    'actions': data.get('actions') or FALLBACK_ACTIONS.get(ft, FALLBACK_ACTIONS['']),
+                    'tip': data.get('tip') or random.choice(FALLBACK_TIPS),
                 }
             )
             logger.info('[scheduler] 브리핑 생성 완료: %s', label)

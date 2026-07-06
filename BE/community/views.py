@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import F
 from django.db.models.functions import Greatest
 
+from config.pagination import StandardPagination
 from .models import CommunityPost, Comment, PostLike, CommentLike
 from .serializers import CommunityPostSerializer, CommentSerializer
 
@@ -14,8 +15,10 @@ from .serializers import CommunityPostSerializer, CommentSerializer
 def post_list_create(request):
     if request.method == 'GET':
         posts = CommunityPost.objects.all().order_by('-created_at')
-        serializer = CommunityPostSerializer(posts, many=True, context={'request': request})
-        return Response(serializer.data)
+        paginator = StandardPagination()
+        page = paginator.paginate_queryset(posts, request)
+        serializer = CommunityPostSerializer(page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
 
     serializer = CommunityPostSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():

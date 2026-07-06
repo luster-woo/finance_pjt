@@ -188,10 +188,6 @@ const axesList = [
   { key: 'active',   lo: '수동형', hi: '능동형', loL: 'P', hiL: 'N' },
 ]
 
-function dominantLabel(ax) {
-  const val = result.value.axes?.[ax.key] ?? 50
-  return val >= 50 ? ax.hi : ax.lo
-}
 function dominantPct(val) {
   return val >= 50 ? val : 100 - val
 }

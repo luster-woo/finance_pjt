@@ -1,5 +1,5 @@
 from decimal import Decimal, InvalidOperation
-from datetime import datetime
+import datetime
 from pathlib import Path
 
 import yfinance as yf
@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.utils.timezone import make_aware
 
 from .models import CommodityPrice
 from .serializers import CommodityPriceSerializer
@@ -19,14 +20,16 @@ COMMODITY_TICKERS = {
 
 
 def _parse_xlsx_date(value):
+    """엑셀 날짜 값 → timezone-aware datetime (Asia/Seoul)."""
     if value is None:
         return None
-    if isinstance(value, datetime):
-        return value
+    if isinstance(value, datetime.datetime):
+        naive = value.replace(tzinfo=None)
+        return make_aware(naive)
     if isinstance(value, str):
         for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y.%m.%d'):
             try:
-                return datetime.strptime(value, fmt)
+                return make_aware(datetime.datetime.strptime(value, fmt))
             except ValueError:
                 continue
     return None
@@ -97,7 +100,14 @@ def import_commodities(request):
                 price = Decimal(str(round(float(close), 4)))
             except (InvalidOperation, ValueError):
                 continue
-            recorded_at = date.to_pydatetime().replace(tzinfo=None) if hasattr(date, 'to_pydatetime') else date
+            # yfinance 반환 타임스탬프 → timezone-aware datetime
+            raw_dt = date.to_pydatetime() if hasattr(date, 'to_pydatetime') else date
+            if isinstance(raw_dt, datetime.datetime) and raw_dt.tzinfo is None:
+                recorded_at = make_aware(raw_dt)
+            elif isinstance(raw_dt, datetime.datetime):
+                recorded_at = raw_dt
+            else:
+                recorded_at = make_aware(datetime.datetime.combine(raw_dt, datetime.time.min))
             flag = _save_commodity(commodity_type, recorded_at, price)
             if flag:
                 created_total += 1

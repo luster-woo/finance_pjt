@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -5,6 +7,8 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import SignupSerializer, ProfileSerializer
+
+logger = logging.getLogger(__name__)
 from financial_tests.models import FinancialTest
 from favorites.models import Favorite, SubscribedProduct, RecentProduct
 from stocks.models import StockFavorite
@@ -50,13 +54,12 @@ def profile(request):
 @permission_classes([IsAuthenticated])
 def logout(request):
     try:
-        from rest_framework_simplejwt.tokens import RefreshToken
         refresh_token = request.data.get('refresh')
         if refresh_token:
             token = RefreshToken(refresh_token)
             token.blacklist()
-    except Exception:
-        pass
+    except Exception as e:
+        logger.warning('logout blacklist 실패 (user=%s): %s', request.user.id, e)
     return Response({'message': '로그아웃 되었습니다.'})
 
 

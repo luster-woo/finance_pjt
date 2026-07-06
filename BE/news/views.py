@@ -1,12 +1,14 @@
 import datetime
+import html
 import re
 import time
 
 import feedparser
-import datetime
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.timezone import make_aware
 from rest_framework.decorators import api_view, permission_classes
+from config.pagination import StandardPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
@@ -26,31 +28,41 @@ FINANCE_KEYWORDS = {
 }
 
 
+_FINANCE_KEYWORDS_LOWER = {kw.lower() for kw in FINANCE_KEYWORDS}
+
+
 def _is_finance_related(title, summary=''):
     text = (title + ' ' + summary).lower()
-    return any(kw in text for kw in FINANCE_KEYWORDS)
+    return any(kw in text for kw in _FINANCE_KEYWORDS_LOWER)
 
 
 # 한국 금융/경제 뉴스 RSS 피드 목록 (API 키 불필요)
+# 진짜 경제/증권/재테크 섹션만 사용 — '전체뉴스' 등 잡다한 카테고리 피드는 제외
 FINANCE_RSS_FEEDS = [
+    ('한국경제',  'https://www.hankyung.com/feed/economy'),
     ('한국경제',  'https://www.hankyung.com/feed/finance'),
-    ('한국경제',  'https://www.hankyung.com/feed/stock'),
-    ('매일경제',  'https://www.mk.co.kr/rss/50100032/'),
-    ('매일경제',  'https://www.mk.co.kr/rss/40300001/'),
-    ('연합뉴스',  'https://www.yna.co.kr/RSS/economy.xml'),
-    ('연합뉴스',  'https://www.yna.co.kr/RSS/market.xml'),
-    ('이데일리',  'https://rss.edaily.co.kr/edaily/section/economy.xml'),
-    ('뉴스1',     'https://feeds.feedburner.com/news1-economy'),
-    ('파이낸셜뉴스', 'https://www.fnnews.com/rss/fn_realnews_010100.xml'),
+    ('매일경제',  'https://www.mk.co.kr/rss/30100041/'),   # 경제
+    ('매일경제',  'https://www.mk.co.kr/rss/50200011/'),   # 증권
+    ('매일경제',  'https://www.mk.co.kr/rss/40200003/'),   # 머니 앤 리치스(재테크)
+    ('연합뉴스',  'https://www.yna.co.kr/rss/economy.xml'),
+    ('연합뉴스',  'https://www.yna.co.kr/rss/market.xml'),
 ]
+
+# 일부 언론사는 기본 User-Agent 요청을 403으로 차단하므로 브라우저로 위장
+RSS_USER_AGENT = (
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+    '(KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+)
 
 
 def _parse_struct_time(st):
+    """feedparser struct_time → timezone-aware datetime (Asia/Seoul)"""
     if not st:
         return None
     try:
-        return datetime.datetime.fromtimestamp(time.mktime(st))
-    except (TypeError, ValueError, OverflowError):
+        naive = datetime.datetime.fromtimestamp(time.mktime(st))
+        return make_aware(naive)
+    except (TypeError, ValueError, OverflowError, OSError):
         return None
 
 
@@ -65,13 +77,13 @@ def import_news(request):
 
     for publisher, feed_url in feeds:
         try:
-            parsed = feedparser.parse(feed_url)
+            parsed = feedparser.parse(feed_url, request_headers={'User-Agent': RSS_USER_AGENT})
         except Exception as exc:
             errors.append(f'{publisher}: {exc}')
             continue
 
         for entry in parsed.entries:
-            title = (getattr(entry, 'title', '') or '').strip()
+            title = html.unescape((getattr(entry, 'title', '') or '').strip())
             if not title:
                 skipped += 1
                 continue
@@ -82,7 +94,7 @@ def import_news(request):
                 or getattr(entry, 'description', '')
                 or ''
             ).strip()
-            summary = re.sub(r'<[^>]+>', '', summary)[:500]
+            summary = html.unescape(re.sub(r'<[^>]+>', '', summary))[:500]
 
             # 금융 관련 기사만 저장
             if not _is_finance_related(title, summary):
@@ -131,8 +143,10 @@ def import_news(request):
 @api_view(['GET'])
 def news_list(request):
     items = News.objects.all().order_by('-published_at')
-    serializer = NewsSerializer(items, many=True)
-    return Response(serializer.data)
+    paginator = StandardPagination()
+    page = paginator.paginate_queryset(items, request)
+    serializer = NewsSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])

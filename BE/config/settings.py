@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -39,8 +40,6 @@ SECRET_KEY = os.environ.get(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
-
-ALLOWED_HOSTS_BASE = []  # overridden below
 
 
 # Application definition
@@ -133,13 +132,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -152,6 +151,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CORS
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
@@ -160,6 +160,14 @@ else:
         'http://127.0.0.1:5173',
     ]
 
+# ALLOWED_HOSTS: 환경변수로 제어 (쉼표 구분), 없으면 로컬 개발 기본값
+_allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', '')
+if _allowed_hosts_env:
+    ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_env.split(',') if h.strip()]
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -174,6 +182,16 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'config.exceptions': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'accounts': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
     },
 }
 
@@ -186,9 +204,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
+    'EXCEPTION_HANDLER': 'config.exceptions.custom_exception_handler',
 }
 
-from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -196,8 +214,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
-
+# Custom API Keys
 FINLIFE_API_KEY = os.environ.get('FINLIFE_API_KEY', '')
 KAKAO_REST_API_KEY = os.environ.get('KAKAO_REST_API_KEY', '')
 STOCK_API_KEY = os.environ.get('STOCK_API_KEY', '')
@@ -208,5 +225,7 @@ GMS_API_URL = os.environ.get('GMS_API_URL', '')
 GMS_MODEL = os.environ.get('GMS_MODEL', os.environ.get('GEMINI_MODEL', 'claude-opus-4-8'))
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-flash')
+
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

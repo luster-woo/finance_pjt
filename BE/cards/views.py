@@ -8,6 +8,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 
+from config.pagination import StandardPagination
+
 from .models import Card, CardBenefit, CardReview
 from .serializers import CardSerializer, CardBenefitSerializer, CardReviewSerializer
 
@@ -15,8 +17,10 @@ from .serializers import CardSerializer, CardBenefitSerializer, CardReviewSerial
 @api_view(['GET'])
 def card_list(request):
     cards = Card.objects.all()
-    serializer = CardSerializer(cards, many=True)
-    return Response(serializer.data)
+    paginator = StandardPagination()
+    page = paginator.paginate_queryset(cards, request)
+    serializer = CardSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])
