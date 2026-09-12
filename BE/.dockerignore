@@ -1,0 +1,14 @@
+# BE/ 를 컨텍스트로 직접 빌드할 때만 쓰인다.
+# 기본 빌드는 루트 컨텍스트이므로 루트 .dockerignore 를 수정할 것.
+
+**/__pycache__/
+**/*.py[cod]
+**/*.log
+**/.env
+**/.env.*
+db.sqlite3
+db_backup.sqlite3
+media/
+staticfiles/
+.venv/
+venv/

@@ -102,12 +102,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# POSTGRES_DB 가 지정되면 PostgreSQL, 아니면 기존 SQLite (로컬 개발 그대로 동작)
+if os.environ.get('POSTGRES_DB'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['POSTGRES_DB'],
+            'USER': os.environ.get('POSTGRES_USER', 'finfit'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+            'HOST': os.environ.get('POSTGRES_HOST', 'db'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+            'CONN_MAX_AGE': 60,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -144,28 +158,47 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.environ.get('STATIC_ROOT', str(BASE_DIR / 'staticfiles'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS
+def _csv_env(name, default=''):
+    """쉼표로 구분된 환경변수를 리스트로 변환."""
+    return [v.strip() for v in os.environ.get(name, default).split(',') if v.strip()]
+
+
+ALLOWED_HOSTS = _csv_env('ALLOWED_HOSTS') or ['localhost', '127.0.0.1']
+
+# 운영에서는 Nginx가 FE와 API를 같은 오리진으로 묶어 CORS가 필요 없다.
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [
+    CORS_ALLOWED_ORIGINS = _csv_env('CORS_ALLOWED_ORIGINS') or [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
     ]
 
-# ALLOWED_HOSTS: 환경변수로 제어 (쉼표 구분), 없으면 로컬 개발 기본값
-_allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', '')
-if _allowed_hosts_env:
-    ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_env.split(',') if h.strip()]
-else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# admin 로그인에 필요. 스킴을 포함한 형태여야 한다.
+CSRF_TRUSTED_ORIGINS = _csv_env('CSRF_TRUSTED_ORIGINS')
+
+# 리버스 프록시 뒤에서 호스트/스킴 인식
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if not DEBUG:
+    # 인증서를 붙인 뒤에 켠다.
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False').lower() in ('true', '1', 'yes')
+    SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
+    CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
 # Logging
 LOGGING = {
@@ -228,4 +261,7 @@ GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-flash')
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+
+# 운영에서는 sched 컨테이너에서만 True. 기본값은 DEBUG 와 동일하다.
+RUN_SCHEDULER = os.environ.get('RUN_SCHEDULER', str(DEBUG)).lower() in ('true', '1', 'yes')

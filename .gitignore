@@ -133,6 +133,11 @@ celerybeat.pid
 
 # Environments
 .env
+.env.prod
+.env.*.local
+!.env.example
+!.env.prod.example
+BE/staticfiles/
 .venv
 env/
 venv/
