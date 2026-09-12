@@ -18,10 +18,12 @@
 | 담당             | 백엔드 전체                         |
 | Backend        | Django · Django REST Framework |
 | Frontend       | Vue 3 · Pinia · Vite           |
-| Database       | SQLite                         |
+| Database       | SQLite (개발) · PostgreSQL 16 (운영) |
 | AI             | SSAFY GMS · Gemini 1.5 Flash   |
 | External API   | FSS FinLife · yfinance · RSS   |
 | Authentication | JWT                            |
+| Infra          | Docker Compose · nginx · gunicorn |
+| 배포             | AWS EC2 (Ubuntu 24.04)         |
 
 <br>
 
@@ -54,6 +56,7 @@ Django REST Framework를 기반으로 인증, 금융상품, 추천, 주식, 뉴�
 * AI 금융 상담 API
 * 주변 은행 및 원자재 시세 API
 * 상품·카드 리뷰 및 커뮤니티 API
+* Docker Compose 기반 운영 구성 및 AWS EC2 배포
 
 <br>
 
@@ -214,7 +217,7 @@ AI 금융 상담 챗봇(예·적금·주식·카드·세금), 비로그인 상�
                       │
        ┌──────────────┼──────────────┐
        ↓              ↓              ↓
-    SQLite         금융상품        주식/뉴스
+   SQLite / PG      금융상품        주식/뉴스
        │           데이터 수집       데이터 수집
        │              ↓              ↓
        │         FinLife API    yfinance / RSS
@@ -247,6 +250,14 @@ AI 금융 상담 챗봇(예·적금·주식·카드·세금), 비로그인 상�
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge\&logo=sqlite\&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge\&logo=JSON%20web%20tokens)
 
+**Infra · 배포**
+
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge\&logo=docker\&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge\&logo=nginx\&logoColor=white)
+![Gunicorn](https://img.shields.io/badge/Gunicorn-499848?style=for-the-badge\&logo=gunicorn\&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge\&logo=postgresql\&logoColor=white)
+![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge\&logo=amazonec2\&logoColor=white)
+
 **AI · External API**
 
 * SSAFY GMS — 금융상품 추천, 주식/카드 추천, 뉴스 번역, 금융 브리핑, AI 상담
@@ -268,6 +279,9 @@ AI 금융 상담 챗봇(예·적금·주식·카드·세금), 비로그인 상�
 | 외부 데이터 Timezone 불일치                 | timezone-aware datetime으로 정규화   |
 | JWT 로그아웃 이후 Token 재사용               | Refresh Token Blacklist 적용      |
 | Django Auto Reload로 Scheduler 중복 실행 | 실행 프로세스 구분으로 중복 방지              |
+| 배포 시 스케줄러가 동작하지 않음               | gunicorn에 없는 `RUN_MAIN` 의존 제거, 스케줄러 전용 컨테이너로 분리 |
+| 스왑 생성 후 Docker 빌드가 디스크 부족으로 실패    | EBS 확장 후 `growpart` · `resize2fs`로 파티션·파일시스템 반영 |
+| 컨테이너는 정상인데 외부 접속 불가              | 안에서 밖으로 계층별 확인 → 보안 그룹 인바운드 80 개방 |
 
 자세한 내용은 [트러블슈팅 문서](./docs/trouble-shooting.md)에 정리했습니다.
 
@@ -326,6 +340,52 @@ VITE_KAKAO_MAP_KEY=
 
 <br>
 
+## 배포
+
+개발은 SQLite와 `runserver`로 진행했고, 배포를 위해 운영 구성을 따로 만들었습니다. nginx가 프론트와 API를 한 오리진으로 묶고, 외부에 열리는 포트는 80 하나입니다. DB와 gunicorn은 도커 네트워크 안에만 두었습니다.
+
+```text
+브라우저 :80
+   │
+ nginx ── /         → Vue dist (SPA)
+       ── /api/*    → gunicorn (접두사 제거)
+       ── /admin/   → gunicorn
+       ── /static/  → collectstatic 결과
+       ── /media/   → 업로드 파일
+            │
+          web (Django + gunicorn ×3) ── db (PostgreSQL 16)
+          sched (APScheduler)        ──┘
+```
+
+**개발과 운영에서 달라진 부분**
+
+| 항목       | 개발                    | 운영                       |
+| -------- | --------------------- | ------------------------ |
+| DB       | SQLite 파일             | PostgreSQL 컨테이너 (볼륨 분리)  |
+| 정적 파일    | Django가 직접 서빙         | collectstatic → nginx 서빙 |
+| 스케줄러     | runserver 프로세스 내부     | 전용 컨테이너 1개               |
+| 비밀값      | `.env`                | 서버의 `.env.prod` (git 제외) |
+| 프론트 API 주소 | `http://127.0.0.1:8000` | `/api` (상대 경로)           |
+
+스케줄러 분리가 핵심이었습니다. 기존에는 `RUN_MAIN` 환경변수로 중복 실행을 막고 있었는데, 이 변수는 runserver의 리로더가 설정하는 것이라 gunicorn에는 존재하지 않습니다. 그대로 뒀다면 배포하는 순간 스케줄러가 조용히 꺼졌을 겁니다. 그렇다고 web 컨테이너에서 켜면 gunicorn 워커 3개가 같은 뉴스 수집을 3번 돌리게 됩니다. 웹 서버는 여러 개로 늘리는 게 정상이고 주기 작업은 하나만 돌아야 하니, 수명 주기가 다른 둘을 프로세스 단위로 분리했습니다.
+
+**실행**
+
+```bash
+cp .env.prod.example .env.prod   # SECRET_KEY, ALLOWED_HOSTS, POSTGRES_PASSWORD 설정
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+```
+
+마이그레이션과 `collectstatic`은 `BE/entrypoint.sh`가 처리합니다. AWS EC2(t3.small / Ubuntu 24.04)에 배포해 동작을 확인했고, 컨테이너 네 개의 메모리 실측 합계는 469MB였습니다.
+
+![배포 화면](./screenshots/23_deploy_ec2.png)
+
+*AWS EC2 공인 IP로 접속한 실제 배포 화면*
+
+상세 절차는 [배포 문서](./deploy/README.md), 실제로 막힌 지점과 원인은 [배포일지](./deploy/배포일지.md)에 정리했습니다.
+
+<br>
+
 ## 프로젝트 문서
 
 | 문서                                  | 내용                               |
@@ -334,6 +394,8 @@ VITE_KAKAO_MAP_KEY=
 | [API 명세](./docs/api.md)             | 전체 API 엔드포인트 및 요청/응답 예시          |
 | [기술 스택](./docs/tech-stack.md)       | 기술 선택 이유                         |
 | [트러블슈팅](./docs/trouble-shooting.md) | 개발 과정에서 발생한 문제와 해결 과정            |
+| [배포](./deploy/README.md)            | 운영 구성과 AWS EC2 배포 절차                |
+| [배포일지](./deploy/배포일지.md)           | 배포 중 실제로 막힌 지점과 원인을 좁혀간 과정         |
 
 <br>
 
@@ -349,7 +411,7 @@ VITE_KAKAO_MAP_KEY=
 
 **아쉬운 부분**
 
-배포까지 가지 못했습니다. SQLite는 로컬 포트폴리오 전제로 고른 것이었는데, 끝내고 보니 실제 서비스 URL을 못 준 게 가장 아쉽습니다. ORM을 쓰고 있어 PostgreSQL 전환은 큰 변경 없이 가능했던 만큼, 처음부터 배포를 염두에 뒀다면 실제 서비스까지 갈 수 있었을 것 같습니다.
+프로젝트 기간 안에는 배포까지 가지 못했습니다. SQLite도 로컬 포트폴리오를 전제로 고른 것이었습니다. 이후 따로 시간을 내 Docker Compose로 운영 구성을 만들고 AWS EC2에 배포했는데, ORM을 쓰고 있던 덕분에 PostgreSQL 전환은 설정 변경만으로 끝났습니다. 다만 처음부터 배포를 염두에 뒀다면 스케줄러의 `RUN_MAIN` 의존처럼 개발 서버에만 있는 전제를 코드에 넣지 않았을 것이고, 그만큼 나중에 고칠 일도 줄었을 겁니다. 환경 차이는 배포할 때 발견하는 것보다 처음부터 가정하지 않는 편이 싸다는 걸 배웠습니다.
 
 주식 거래 기능은 종목 조회, 관심 종목, 시세 차트까지 했지만 모의 매수·매도까지는 기간 내에 못 붙였습니다. 거래 내역과 포트폴리오 수익률까지 연결했다면 완성도가 더 높았을 겁니다.
 
